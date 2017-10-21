@@ -15,11 +15,9 @@ public class Avatar {
 	private double walkAngle = 35;
 	private double handAngle = 35;
 	private RevSphereVBO  hat = null;
-	private Portal portal =null;
-	public Avatar(Terrain terrain, GL2 gl, Portal portal){
+	public Avatar(Terrain terrain, GL2 gl){
 		myTerrain = terrain;
 		hat = new RevSphereVBO(gl);
-		this.portal = portal;
 	}
 	
 	public void draw(GL2 gl,MyTexture[] texture){
@@ -213,23 +211,11 @@ public class Avatar {
     	if(coordinate[2] > myTerrain.size().getHeight() - 1){
     		coordinate[2] = myTerrain.size().getHeight() - 1;
     	}
-		double[] now = this.getCoordinate();
-    	double[] door1 = portal.getPortalCoordinate();
-    	double[] door2 = portal.getTeleCoordinate();
-    	increasement = 0.3;
-    	if(0<=(now[0]-door1[0])&&(now[0]-door1[0])<=0.5&&Math.abs(now[2]-door1[2])<=0.2){
-    		
-    		this.makeAngle(normalizeAngle(this.getAngle()-180));
-    		radian = Math.toRadians(this.angle);
-    		coordinate[0] =door2[0] + Math.cos(radian) * increasement;
-    		coordinate[2] =door2[2] + Math.sin(radian) * increasement;
-    	}
-    	else if(0<=(now[0]-door2[0])&&(now[0]-door2[0])<=0.5&&Math.abs(now[2]-door2[2])<=0.2){
-    		this.makeAngle(normalizeAngle(this.getAngle()-180));
-    		radian = Math.toRadians(this.angle);
-    		coordinate[0] =door1[0] + Math.cos(radian) * increasement;
-    		coordinate[2] =door1[2] + Math.sin(radian) * increasement;
-  		}
+	}
+
+	public void setCood(double[] p){
+		coordinate[0] = p[0];
+		coordinate[2] = p[1];
 	}
 
 	public void jump_up(){

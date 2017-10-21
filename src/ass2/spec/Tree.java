@@ -26,7 +26,7 @@ public class Tree {
     public double[] getPosition() {
         return myPos;
     }
-    
+
     public void render(GL2 gl){
         double height = 2.0;
         int slices = 32;
@@ -181,41 +181,5 @@ public class Tree {
 
         gl.glPopMatrix();
     }
-
-//
-//    public void draw_leaves(GL2 gl, MyTexture[] texture){
-//        GLUT glut = new GLUT();
-//        gl.glPushMatrix();
-//
-//
-//        gl.glTranslated(myPos[0], myPos[1]+0.9,  myPos[2]);
-//        gl.glRotated(270, 1, 0, 0);
-//        gl.glPolygonMode(GL2.GL_FRONT_AND_BACK, GL2.GL_FILL);
-//        gl.glEnable(GL2.GL_TEXTURE_GEN_S);
-//        gl.glEnable(GL2.GL_TEXTURE_GEN_T);
-//
-//        gl.glBindTexture(GL.GL_TEXTURE_2D, texture[2].getTextureId());
-//        gl.glTexGeni(GL2.GL_S, GL2.GL_TEXTURE_GEN_MODE, GL2.GL_TEXTURE_CUBE_MAP);
-//        gl.glTexGeni(GL2.GL_T, GL2.GL_TEXTURE_GEN_MODE, GL2.GL_TEXTURE_CUBE_MAP);
-//        render(gl);
-//
-//
-//        gl.glDisable(GL2.GL_TEXTURE_GEN_S);
-//        gl.glDisable(GL2.GL_TEXTURE_GEN_T);
-//
-//        gl.glEnable(GL2.GL_TEXTURE_GEN_S);
-//        gl.glEnable(GL2.GL_TEXTURE_GEN_T);
-//        gl.glBindTexture(GL.GL_TEXTURE_2D, texture[1].getTextureId());
-//
-//        gl.glRotated(-270, 1, 0, 0);
-//
-//        gl.glTranslated(0, 0.9, 0);
-//        gl.glTexGeni(GL2.GL_S, GL2.GL_TEXTURE_GEN_MODE, GL2.GL_SPHERE_MAP);
-//        gl.glTexGeni(GL2.GL_T, GL2.GL_TEXTURE_GEN_MODE, GL2.GL_SPHERE_MAP);
-//        //glut.glutSolidSphere(0.3, 10, 10);
-//        gl.glDisable(GL2.GL_TEXTURE_GEN_S);
-//        gl.glDisable(GL2.GL_TEXTURE_GEN_T);
-//        gl.glPopMatrix();
-//    }
 
 }

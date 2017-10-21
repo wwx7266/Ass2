@@ -41,8 +41,11 @@ public class SunVBO extends GameObject {
 	public void updateCoordinateAndLight(GL2 gl){
 		angle = MathUtil.normalizeAngle(angle+0.2);
 		rotatePoint();
-		if(angle>0)     gl.glEnable(GL2.GL_LIGHT0);
-		else gl.glDisable(GL2.GL_LIGHT0);
+		if(angle>0)
+			gl.glEnable(GL2.GL_LIGHT0);
+		else
+			gl.glDisable(GL2.GL_LIGHT0);
+
     	if(angle>=0 && angle <= 90)  {
     		emm= emm+colorChange;
     		skyColor += skyColorChange;
@@ -62,7 +65,6 @@ public class SunVBO extends GameObject {
 
 	public void rotatePoint(){
 
-
 		float px =center[0]*2+distance;
     	float py = 0;
     	float ox = center[0];
@@ -70,44 +72,7 @@ public class SunVBO extends GameObject {
     	float redians = (float) Math.toRadians(angle);
     	lightPos0[0] = (float) ((Math.cos(redians) * (px-ox) - Math.sin(redians) * (py-oy) + ox));
     	lightPos0[1] =(float)( (Math.sin(redians) * (px-ox) + Math.cos(redians) * (py-oy) + oy));
-
-
 	}
-
-
-    public void normalize(double v[])
-    {
-        double d = Math.sqrt(v[0]*v[0]+v[1]*v[1]+v[2]*v[2]);
-        if (d != 0.0)
-        {
-           v[0]/=d;
-           v[1]/=d;
-           v[2]/=d;
-        }
-    }
-
-
-    void normCrossProd(double v1[], double v2[], double out[])
-    {
-       out[0] = v1[1]*v2[2] - v1[2]*v2[1];
-       out[1] = v1[2]*v2[0] - v1[0]*v2[2];
-       out[2] = v1[0]*v2[1] - v1[1]*v2[0];
-       normalize(out);
-    }
-
-
-
-    double r(double t){
-    	double x  = Math.cos(2 * Math.PI * t);
-        return x;
-    }
-
-    double getY(double t){
-
-    	double y  = Math.sin(2 * Math.PI * t);
-        return y;
-    }
-
 
     public float[] getLight(){
     	float[] emmLi = {emm/255,emm/255,emm/255,1f};
@@ -132,11 +97,6 @@ public class SunVBO extends GameObject {
 	    		gl.glTranslatef(lightPos0[0], lightPos0[1], lightPos0[2]);
 	    		gl.glBindTexture(GL.GL_TEXTURE_2D, texture[4].getTextureId());
 
-
-
-	    		//float matAmb[] = {1f, 1f, 1f, 1.0f};
-
-	        	// Material properties of sphere.
 	        	gl.glMaterialfv(GL2.GL_FRONT_AND_BACK, GL2.GL_AMBIENT, getLight(),0);
 
 

@@ -24,6 +24,7 @@ public class Terrain {
     private List<Road> myRoads;
     private float[] mySunlight;
     private MyTexture Mytextures[] = new MyTexture[12];
+    private int frames = 0;
 
     /**
      * Create a new terrain
@@ -151,40 +152,46 @@ public class Terrain {
     }
 
     public void draw(GL2 gl, MyTexture[] texture) {
+        frames += 1;
+        if(frames > 1000)
+            frames = 0;
+
+        int index = 12+(this.frames/10)%5;
+        gl.glMatrixMode(GL2.GL_MODELVIEW);
+
+        gl.glPushMatrix();
+
+        float matAmb[] = {0.2f, 0.2f, 0.2f, 1.0f};
+        float matdiff[] = { 0.2f, 1f, 0f, 1.0f };
+
+        //gl.glBindTexture(GL.GL_TEXTURE_2D, texture[0].getTextureId());
+        // Material properties of teapot
+        gl.glMaterialfv(GL2.GL_FRONT, GL2.GL_AMBIENT, matAmb,0);
+        gl.glMaterialfv(GL2.GL_FRONT, GL2.GL_DIFFUSE, matdiff,0);
+
         gl.glActiveTexture(GL2.GL_TEXTURE0);
-        gl.glEnable(GL2.GL_TEXTURE_2D);
-        gl.glBindTexture(GL2.GL_TEXTURE_2D, texture[0].getTextureId());
+        gl.glBindTexture(GL.GL_TEXTURE_2D, texture[index].getTextureId());
 
-        // Materials and Color of Trees
-        float ambDiff[] = {0.105f, 0.702f, 0.24f, 1.0f};
-        float spec[] = { 0f, 0f, 0f, 1.0f };
-        float shine[] = { 1.0f };
+        gl.glPolygonMode(GL2.GL_FRONT_AND_BACK, GL2.GL_FILL);
 
-        gl.glMaterialfv(GL2.GL_FRONT, GL2.GL_AMBIENT_AND_DIFFUSE, ambDiff,0);
-        gl.glMaterialfv(GL2.GL_FRONT, GL2.GL_SPECULAR, spec,0);
-        gl.glMaterialfv(GL2.GL_FRONT, GL2.GL_SHININESS, shine,0);
-
-        gl.glPolygonMode(GL.GL_BACK,GL2.GL_LINE);
 
 
         //draw the mesh
         for(int z = 0; z<myAltitude.length-1; z++)
             for(int x = 0; x<myAltitude.length-1; x++){
-
-
                 double[] p1 = new double[] {x+1, altitude(x+1, z), z};
                 double[] p2 = new double[] {x, altitude(x, z), z};
                 double[] p3 = new double[] {x, altitude(x, z+1), z+1};
                 double[] normal = MathUtil.normal(p1, p2, p3);
-//                System.out.println(altitude(x, z));
                 gl.glBegin(GL2.GL_TRIANGLES);
                 gl.glNormal3d(normal[0],normal[1],normal[2]);
+                gl.glTexCoord2d(0, 0);
                 gl.glVertex3d(p1[0], p1[1], p1[2]);
+                gl.glTexCoord2d(1, 0);
                 gl.glVertex3d(p2[0], p2[1], p2[2]);
+                gl.glTexCoord2d(0, 1);
                 gl.glVertex3d(p3[0], p3[1], p3[2]);
                 gl.glEnd();
-
-
 
                 p1 = new double[] {x+1, getGridAltitude(x+1, z), z};
                 p2 = new double[] {x, getGridAltitude(x, z+1), z+1};
@@ -192,24 +199,28 @@ public class Terrain {
                 normal = MathUtil.normal(p1, p2, p3);
                 gl.glBegin(GL2.GL_TRIANGLES);
                 gl.glNormal3d(normal[0],normal[1],normal[2]);
+                gl.glTexCoord2d(0, 0);
                 gl.glVertex3d(p1[0], p1[1], p1[2]);
+                gl.glTexCoord2d(1, 0);
                 gl.glVertex3d(p2[0], p2[1], p2[2]);
+                gl.glTexCoord2d(0, 1);
                 gl.glVertex3d(p3[0], p3[1], p3[2]);
                 gl.glEnd();
 
 
             }
 
-        gl.glDisable(GL2.GL_TEXTURE_2D);
-        gl.glLightModeli(GL2.GL_LIGHT_MODEL_TWO_SIDE, GL2.GL_FALSE);
+//        gl.glDisable(GL2.GL_TEXTURE_2D);
+//        gl.glLightModeli(GL2.GL_LIGHT_MODEL_TWO_SIDE, GL2.GL_FALSE);
 
         for(Tree t:this.myTrees){
             t.draw(gl, texture);
         }
 
-//        for(Road r:this.roads()){
-//            r.draw(gl, texture);
-//        }
+        for(Road r:this.roads()){
+            r.draw(gl, texture);
+        }
+        gl.glPopMatrix();
     }
     	
     /**

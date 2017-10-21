@@ -45,7 +45,6 @@ public class MyTexture {
         }
 		
 		gl.glGenTextures(1, textureID, 0);
-		System.out.println("hahhahaa"+textureID[0]);
 		//The first time bind is called with the given id,
 		//an openGL texture object is created and bound to the id
 		//It also makes it the current texture.
