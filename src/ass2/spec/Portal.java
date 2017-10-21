@@ -38,9 +38,6 @@ public class Portal {
 	public void draw(GL2 gl,MyTexture[] texture){
 		gl.glPushMatrix();{
 			//gl.glTranslated(this.portalCoordinate[0], portalCoordinate[1], portalCoordinate[2]);
-
-
-			    
 			    
 			drawCube(gl,this.portalCoordinate,texture);
 		
@@ -80,54 +77,14 @@ public class Portal {
 	    	   gl.glVertex3d(point[0], 1.5+point[1], point[2]); 
 	    	   	      
 	    	   gl.glEnd();    	   
-	    }
-	    public double[] crossProduct(double[] a,double[] b){
-	    	double[] product = {a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]};
+	 }
 
-	    	return product;
-	    }
-//	public void drawDoor(GL2 gl){
-//		gl.glPushMatrix();{
-//			//front
-//		gl.glBegin(GL2.GL_QUADS);
-//		{
-//			gl.glVertex3d(this.portalCoordinate[0]-0.3, this.myTerrain.altitude(portalCoordinate[0]-0.3, portalCoordinate[2]), this.portalCoordinate[2]);
-//			gl.glVertex3d(this.portalCoordinate[0]-0.3, this.myTerrain.altitude(portalCoordinate[0]-0.3, portalCoordinate[2])+0.3, this.portalCoordinate[2]);
-//			gl.glVertex3d(this.portalCoordinate[0]+0.3, this.myTerrain.altitude(portalCoordinate[0]-0.3, portalCoordinate[2])+0.3, this.portalCoordinate[2]);
-//			gl.glVertex3d(this.portalCoordinate[0]+0.3, this.myTerrain.altitude(portalCoordinate[0]-0.3, portalCoordinate[2]), this.portalCoordinate[2]);
-//		}		
-//		gl.glEnd();
-//		//left
-//		gl.glBegin(GL2.GL_QUADS);
-//		{
-//			gl.glVertex3d(this.portalCoordinate[0]-0.3, this.myTerrain.altitude(portalCoordinate[0]-0.3, portalCoordinate[2]), this.portalCoordinate[2]);
-//			gl.glVertex3d(this.portalCoordinate[0]-0.3, this.myTerrain.altitude(portalCoordinate[0]-0.3, portalCoordinate[2]-0.3), this.portalCoordinate[2]-0.3);
-//			gl.glVertex3d(this.portalCoordinate[0]-0.3, this.myTerrain.altitude(portalCoordinate[0]-0.3, portalCoordinate[2]-0.3)+0.3, this.portalCoordinate[2]-0.3);
-//			gl.glVertex3d(this.portalCoordinate[0]-0.3, this.myTerrain.altitude(portalCoordinate[0]-0.3, portalCoordinate[2])+0.3, this.portalCoordinate[2]);
-//		}		
-//		gl.glEnd();
-//		//back
-//		gl.glBegin(GL2.GL_QUADS);
-//		{
-//			gl.glVertex3d(this.portalCoordinate[0]-0.3, this.myTerrain.altitude(portalCoordinate[0]-0.3, portalCoordinate[2]-0.3), this.portalCoordinate[2]-0.3);
-//			gl.glVertex3d(this.portalCoordinate[0]-0.3, this.myTerrain.altitude(portalCoordinate[0]-0.3, portalCoordinate[2]-0.3)+0.3, this.portalCoordinate[2]-0.3);
-//			gl.glVertex3d(this.portalCoordinate[0]+0.3, this.myTerrain.altitude(portalCoordinate[0]+0.3, portalCoordinate[2]-0.3)+0.3, this.portalCoordinate[2]-0.3);
-//			gl.glVertex3d(this.portalCoordinate[0]+0.3, this.myTerrain.altitude(portalCoordinate[0]+0.3, portalCoordinate[2]-0.3)-0.3, this.portalCoordinate[2]);
-//		}		
-//		gl.glEnd();
-//		//right
-//		gl.glBegin(GL2.GL_QUADS);
-//		{
-//			gl.glVertex3d(this.portalCoordinate[0]+0.3, this.myTerrain.altitude(portalCoordinate[0]+0.3, portalCoordinate[2]-0.3), this.portalCoordinate[2]-0.3);
-//			gl.glVertex3d(this.portalCoordinate[0]+0.3, this.myTerrain.altitude(portalCoordinate[0]-0.3, portalCoordinate[2]-0.3)+0.3, this.portalCoordinate[2]-0.3);
-//			gl.glVertex3d(this.portalCoordinate[0]+0.3, this.myTerrain.altitude(portalCoordinate[0]+0.3, portalCoordinate[2]+0.3)+0.3, this.portalCoordinate[2]+0.3);
-//			gl.glVertex3d(this.portalCoordinate[0]+0.3, this.myTerrain.altitude(portalCoordinate[0]+0.3, portalCoordinate[2]+0.3)-0.3, this.portalCoordinate[2]);
-//		}		
-//		gl.glEnd();
-//		gl.glPopMatrix();
-//		}
-//	}
-//	
+	public double[] crossProduct(double[] a,double[] b){
+		double[] product = {a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]};
+
+		return product;
+	}
+
 	public double getAngle() {
 		return angle;
 	}
@@ -137,17 +94,9 @@ public class Portal {
 	}
 	
 	public void changeAngle(double increasement) {
-		this.angle = normalizeAngle(this.angle + increasement);
+		this.angle = MathUtil.normalizeAngle(this.angle + increasement);
 	}
 
-	
-	public double normalizeAngle(double angle)
-	{
-	    double newAngle = angle;
-	    while (newAngle <= -180) newAngle += 360;
-	    while (newAngle > 180) newAngle -= 360;
-	    return newAngle;
-	}
 
 
 

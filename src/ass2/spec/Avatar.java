@@ -4,6 +4,9 @@ import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.util.gl2.GLUT;
 
+import static ass2.spec.MathUtil.normalizeAngle;
+
+
 public class Avatar {
 	private Terrain myTerrain;
 	private double[] coordinate = {0,0,0};
@@ -17,17 +20,12 @@ public class Avatar {
 		myTerrain = terrain;
 		hat = new RevSphereVBO(gl);
 		this.portal = portal;
-		
 	}
 	
 	public void draw(GL2 gl,MyTexture[] texture){
 		GLUT glut = new GLUT();
-		gl.glPushMatrix();{
-			
-		
-			//System.out.println("angle =: "+angle);
-			
-			
+		gl.glPushMatrix();
+		{
 			gl.glTranslated(coordinate[0], myTerrain.altitude(coordinate[0], coordinate[2]), coordinate[2]);
 			gl.glRotated(-angle, 0, 1, 0);
 			//body(length:0.6)
@@ -178,16 +176,7 @@ public class Avatar {
 			gl.glTranslated(0, 0, -0.20);
 			gl.glRotated(115, 1, 0, 0);
 			gl.glTranslated(0, -0.9, 0);
-			//gl.glRotated(150, 1, 0, 0);
-			//			gl.glRotated(-angle, 0, 1, 0);
-//			gl.glRotated(270, 1, 0, 0);
-//			glut.glutSolidCylinder(0.1,0.9,20,20); 
-//			gl.glRotated(-270, 1, 0, 0);
-//			
-//			gl.glTranslated(0, 0.9, 0);
-//			//gl.glRotated(-90, 0, 1, 0);
-//			glut.glutSolidTeapot(0.3);
-//			gl.glRotated(90, 0, 1, 0);
+
 			
 			
 		}
@@ -206,7 +195,7 @@ public class Avatar {
 
 
 
-	public void move(double increasement) {
+	public void walk(double increasement) {
 		count++;
 		double radian = Math.toRadians(angle);
 		coordinate[0]= this.coordinate[0] + Math.cos(radian) * increasement;
@@ -236,16 +225,20 @@ public class Avatar {
     		coordinate[2] =door2[2] + Math.sin(radian) * increasement;
     	}
     	else if(0<=(now[0]-door2[0])&&(now[0]-door2[0])<=0.5&&Math.abs(now[2]-door2[2])<=0.2){
-    		System.out.println("lalalalal");
     		this.makeAngle(normalizeAngle(this.getAngle()-180));
     		radian = Math.toRadians(this.angle);
     		coordinate[0] =door1[0] + Math.cos(radian) * increasement;
     		coordinate[2] =door1[2] + Math.sin(radian) * increasement;
-  	}
-		
-		
-		//this.coordinate[0] += increasement;
-		//setWordCoordinate();
+  		}
+	}
+
+	public void jump_up(){
+		System.out.println("jump");
+		coordinate[1] = this.coordinate[1] +  2.0;
+	}
+
+	public void jump_down(){
+		coordinate[1] -= 2.0;
 	}
 	
 	public double getAngle() {
@@ -258,18 +251,10 @@ public class Avatar {
 	public void makeAngle(double angle){
 		this.angle = angle;
 	}
-	public void changeAngle(double increasement) {
-		this.angle = normalizeAngle(this.angle + increasement);
+	public void rotateFacing(double increasement) {
+		this.angle = MathUtil.normalizeAngle(this.angle + increasement);
 	}
 
-	
-	public double normalizeAngle(double angle)
-	{
-	    double newAngle = angle;
-	    while (newAngle <= -180) newAngle += 360;
-	    while (newAngle > 180) newAngle -= 360;
-	    return newAngle;
-	}
 
 	public int getCount() {
 		return count;

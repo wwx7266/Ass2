@@ -23,7 +23,7 @@ public class Terrain {
     private List<Tree> myTrees;
     private List<Road> myRoads;
     private float[] mySunlight;
-    private MyTexture Mytextures[] = new MyTexture[2];
+    private MyTexture Mytextures[] = new MyTexture[12];
 
     /**
      * Create a new terrain
@@ -145,7 +145,7 @@ public class Terrain {
         double distance_a = (ratio_a * (x - lower_x) + getGridAltitude(lower_x, upper_z));
         double distance_b = (ratio_b * (x - lower_x) + getGridAltitude(lower_x, lower_z));
         double altitude = ((distance_b-distance_a)/(upper_z-lower_z) * (z - lower_z) + distance_a);
-        System.out.println("altitude is : " + altitude);
+//        System.out.println("altitude is : " + altitude);
 
         return altitude;
     }
@@ -176,7 +176,7 @@ public class Terrain {
                 double[] p2 = new double[] {x, altitude(x, z), z};
                 double[] p3 = new double[] {x, altitude(x, z+1), z+1};
                 double[] normal = MathUtil.normal(p1, p2, p3);
-                System.out.println(altitude(x, z));
+//                System.out.println(altitude(x, z));
                 gl.glBegin(GL2.GL_TRIANGLES);
                 gl.glNormal3d(normal[0],normal[1],normal[2]);
                 gl.glVertex3d(p1[0], p1[1], p1[2]);
